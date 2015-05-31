@@ -52,19 +52,19 @@ void sym_table_print(sym_table* l) {
   printf("\n");
 }
 
-const sym_table_index* sym_table_build_index(sym_table* table) {
-  sym_table_index* index = malloc(sizeof(sym_table_index));
+const sym_table_view* sym_table_build_view(sym_table* table) {
+  sym_table_view* view = malloc(sizeof(sym_table_view));
   sym_table_node* nodes = malloc(sizeof(sym_table_node*) * table->size);
   sym_table_node* cur = table->head;
   for (int i = 0; i < table->size; i++) {
     nodes[i] = *cur;
     cur = cur->next;
   }
-  index->nodes = nodes;
-  index->size = table->size;
-  return index;
+  view->nodes = nodes;
+  view->size = table->size;
+  return view;
 }
 
-sym_table_node* sym_table_find(sym_table_index* index, char* key) {
+sym_table_node* sym_table_find(sym_table_view* view, char* key) {
   return NULL;
 }

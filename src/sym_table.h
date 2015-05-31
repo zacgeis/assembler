@@ -7,10 +7,10 @@ typedef struct sym_table_node {
   int val;
 } sym_table_node;
 
-typedef struct sym_table_index {
+typedef struct sym_table_view {
   sym_table_node* nodes;
   int size;
-} sym_table_index;
+} sym_table_view;
 
 typedef struct sym_table {
   sym_table_node* head;
@@ -21,7 +21,7 @@ typedef struct sym_table {
 sym_table* new_sym_table();
 void sym_table_insert(sym_table* table, char* key, int val);
 void sym_table_print(sym_table* l);
-const sym_table_index* sym_table_build_index(sym_table* table);
-sym_table_node* sym_table_find(sym_table_index* index, char* key);
+const sym_table_view* sym_table_build_view(sym_table* table);
+sym_table_node* sym_table_find(sym_table_view* index, char* key);
 
 #endif

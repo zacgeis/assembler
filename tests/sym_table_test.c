@@ -3,7 +3,7 @@
 
 #include "sym_table.h"
 
-int new_table_and_index_sorter_with_4_keys() {
+int new_table_and_view_sorter_with_4_keys() {
   printf(".");
 
   sym_table* test = new_sym_table();
@@ -13,31 +13,31 @@ int new_table_and_index_sorter_with_4_keys() {
   sym_table_insert(test, "c", 3);
   sym_table_insert(test, "d", 4);
 
-  const sym_table_index* index = sym_table_build_index(test);
+  const sym_table_view* view = sym_table_build_view(test);
 
-  if (index->nodes[0].val != 1) {
+  if (view->nodes[0].val != 1) {
     printf("\n\nsym_table_test\n");
-    printf("\tExpected %i to equal %i\n\n", index->nodes[0].val, 1);
+    printf("\tExpected %i to equal %i\n\n", view->nodes[0].val, 1);
     return 1;
   }
-  if (index->nodes[1].val != 3) {
+  if (view->nodes[1].val != 3) {
     printf("\n\nsym_table_test\n");
-    printf("\tExpected %i to equal %i\n\n", index->nodes[1].val, 3);
+    printf("\tExpected %i to equal %i\n\n", view->nodes[1].val, 3);
     return 1;
   }
-  if (index->nodes[2].val != 4) {
+  if (view->nodes[2].val != 4) {
     printf("\n\nsym_table_test\n");
-    printf("\tExpected %i to equal %i\n\n", index->nodes[2].val, 4);
+    printf("\tExpected %i to equal %i\n\n", view->nodes[2].val, 4);
     return 1;
   }
-  if (index->nodes[3].val != 5) {
+  if (view->nodes[3].val != 5) {
     printf("\n\nsym_table_test\n");
-    printf("\tExpected %i to equal %i\n\n", index->nodes[3].val, 5);
+    printf("\tExpected %i to equal %i\n\n", view->nodes[3].val, 5);
     return 1;
   }
-  if (index->size != 4) {
+  if (view->size != 4) {
     printf("\n\nsym_table_test\n");
-    printf("\tExpected %i to equal %i\n\n", index->size, 4);
+    printf("\tExpected %i to equal %i\n\n", view->size, 4);
     return 1;
   }
 
@@ -47,6 +47,6 @@ int new_table_and_index_sorter_with_4_keys() {
 // Needs search test.
 
 int sym_table_test() {
-  if(new_table_and_index_sorter_with_4_keys() == 1) return 1;
+  if(new_table_and_view_sorter_with_4_keys() == 1) return 1;
   return 0;
 }
