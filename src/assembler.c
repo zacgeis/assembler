@@ -46,11 +46,37 @@ const instruction* parse_instruction(char* strinstruction) {
     parsed_instruction->type = TYPE_A;
     parsed_instruction->a = i;
   } else {
-    const char* a = c_instruction_a(strinstruction);
-    const char* comparison = c_instruction_comparison(strinstruction);
-    c_instruction i = { .a = a, .comparison = comparison };
+    char* comparison_part = malloc(sizeof(strinstruction));
+    strcpy(comparison_part, strinstruction);
+    comparison_part = strstr(comparison_part, "=") + 1;
+    *index(comparison_part, ';') = '\0';
+
+    char* destination_part = malloc(sizeof(strinstruction));
+    strcpy(destination_part, strinstruction);
+    *index(destination_part, '=') = '\0';
+
+    char* jump_part = malloc(sizeof(strinstruction));
+    strcpy(jump_part, strinstruction);
+    jump_part = strstr(jump_part, ";") + 1;
+
+    const char* a = c_instruction_a(comparison_part);
+    const char* comparison = c_instruction_comparison(comparison_part);
+    const char* destination = c_instruction_destination(destination_part);
+    const char* jump = c_instruction_jump(jump_part);
+
+    c_instruction i = {
+      .a = a,
+      .comparison = comparison,
+      .destination = destination,
+      .jump = jump
+    };
+
     parsed_instruction->type = TYPE_C;
     parsed_instruction->c = i;
+
+    //free(comparison_part);
+    //free(destination_part);
+    //free(jump_part);
   }
 
   return parsed_instruction;
@@ -63,6 +89,7 @@ const char* c_instruction_a(char* strpart) {
   return CA1;
 }
 
+// D=D-A;JGT
 const char* c_instruction_comparison(char* strpart) {
   if (strcmp(strpart, "0") == 0) {
     return CC101010;

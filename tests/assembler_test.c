@@ -59,21 +59,32 @@ int parse_a_inst_test_1024() {
 
 int parse_c_inst_test_MP1() {
   printf(".");
-  char* expected_comp = "010011";
-  char* expected_a = "0";
+  const instruction* in = parse_instruction("D=D-A;JGT");
 
-  const instruction* in = parse_instruction("D-A"); // Should be D=D-A
-  const char* result_comp = in->c.comparison;
+  char* expected_a = "0";
   const char* result_a = in->c.a;
 
+  char* expected_comp = "010011";
+  const char* result_comp = in->c.comparison;
+
+  char* expected_dest = "010";
+  const char* result_dest = in->c.destination;
+
+  if (strcmp(result_a, expected_a) != 0) {
+    printf("\n\nParse instruction 'D=D-A;JGT'\n");
+    printf("\tExpected '%s' to equal '%s'\n\n", result_a, expected_a);
+    return 1;
+  }
+
   if (strcmp(result_comp, expected_comp) != 0) {
-    printf("\n\nParse instruction 'D=D-A'\n");
+    printf("\n\nParse instruction 'D=D-A;JGT'\n");
     printf("\tExpected '%s' to equal '%s'\n\n", result_comp, expected_comp);
     return 1;
   }
-  if (strcmp(result_a, expected_a) != 0) {
-    printf("\n\nParse instruction 'D=D-A'\n");
-    printf("\tExpected '%s' to equal '%s'\n\n", result_a, expected_a);
+
+  if (strcmp(result_dest, expected_dest) != 0) {
+    printf("\n\nParse instruction 'D=D-A;JGT'\n");
+    printf("\tExpected '%s' to equal '%s'\n\n", result_dest, expected_dest);
     return 1;
   }
 
